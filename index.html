@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Test for Fuse8</title>
+        <link rel="stylesheet" href="./<%= htmlWebpackPlugin.files.css %>" />
+    </head>
+    <body>
+        <div class="container">
+            <ul class="navigation">
+                <li class="navigation__item">
+                    <a href="#">Why Hyve</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#">Cloud hosting</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#">Dedicated servers</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#">sftp hosting</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#">colocation</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#">solutions</a>
+                </li>
+            </ul>
+            <div class="form">
+                <h1 class="form__title">Request a call back</h1>
+                <h2 class="form__subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>
+                <form class="form__form" action="/" method="post">
+                    <div class="form__row">
+                        <div class="input form__input">
+                            <input class="input__field is-required" type="text" name="firstname">
+                            <div class="input__placeholder">First Name</div>
+                            <div class="input__border"></div>
+                            <div class="input__icon"></div>
+                            <div class="input__tooltip"></div>
+                        </div>
+                        <div class="input form__input">
+                            <input class="input__field is-required" type="text" name="lastname">
+                            <div class="input__placeholder">Last Name</div>
+                            <div class="input__border"></div>
+                            <div class="input__icon"></div>
+                            <div class="input__tooltip"></div>
+                        </div>
+                    </div>
+                    <div class="form__row">
+                        <div class="input form__input">
+                            <input class="input__field is-required" type="text" name="email">
+                            <div class="input__placeholder">Email Address</div>
+                            <div class="input__border"></div>
+                            <div class="input__icon"></div>
+                            <div class="input__tooltip"></div>
+                        </div>
+                        <div class="input form__input">
+                            <input class="input__field is-required" type="text" name="phone">
+                            <div class="input__placeholder">Telephone</div>
+                            <div class="input__border"></div>
+                            <div class="input__icon"></div>
+                            <div class="input__tooltip"></div>
+                        </div>
+                    </div>
+                    <div class="form__row">
+                        <div class="input form__input">
+                            <input type="hidden" name="reason" value="" class="input__field is-required">
+                            <div class="input__dropdown-btn "></div>
+                            <div class="input__placeholder">Select a Reason</div>
+                            <ul class="input__dropdown-list">
+                                <li data-value="1" data-name="reason" class="input__dropdown-list-item">I have a question about poduct</li>
+                                <li data-value="2" data-name="reason" class="input__dropdown-list-item">I have a problems in my life</li>
+                                <li data-value="3" data-name="reason" class="input__dropdown-list-item">I have a lot of free time</li>
+                            </ul>
+                            <div class="input__border"></div>
+                            <div class="input__icon"></div>
+                            <div class="input__tooltip"></div>
+                        </div>
+                    </div>
+                    <div class="form__row">
+                        <div class="input form__input">
+                            <textarea class="input__field input__field--textarea" name="message" rows=4></textarea>
+                            <div class="input__placeholder">Message</div>
+                            <div class="input__border"></div>
+                            <div class="input__icon"></div>
+                            <div class="input__tooltip"></div>
+                        </div>
+                    </div>
+                    <div class="form__row">
+                        <button class="form__submit" type="submit">Send call back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="./<%= htmlWebpackPlugin.files.chunks.index.entry %>"></script>
+    </body>
+</html>

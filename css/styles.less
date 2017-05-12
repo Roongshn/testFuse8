@@ -1,0 +1,448 @@
+@import 'reset.less';
+
+@white: #ffffff;
+@gray: #222629;
+@blue: #03c1de;
+@green: #8ac53f;
+@red: #ff4f00;
+@gray-light: #f0f2f3;
+
+@font-face {
+  font-family: 'HKGrotesk';
+  src: url('../fonts/HKGrotesk-Medium.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/HKGrotesk-Medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/HKGrotesk-Medium.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/HKGrotesk-Medium.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/HKGrotesk-Medium.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/HKGrotesk-Medium.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'HKGrotesk-light';
+  src: url('../fonts/HKGrotesk-Light.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/HKGrotesk-Light.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/HKGrotesk-Light.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/HKGrotesk-Light.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/HKGrotesk-Light.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/HKGrotesk-Light.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'HKGrotesk-bold';
+  src: url('../fonts/HKGrotesk-Bold.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/HKGrotesk-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/HKGrotesk-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/HKGrotesk-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/HKGrotesk-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/HKGrotesk-Bold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@HKGrotesk: "HKGrotesk", "Arial";
+@HKGrotesk-light: "HKGrotesk-light", "Arial";
+@HKGrotesk-bold: "HKGrotesk-bold", "Arial";
+
+@animationSpeed: .1s;
+
+body {
+    font-family: @HKGrotesk;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.input {
+    font-size: 14px;
+    position: relative;
+    line-height: 27px;
+
+    & + & {
+        margin-left: 20px;
+    }
+
+    &__field {
+        background-color: transparent;
+        line-height: 27px;;
+        height: 27px;
+        display: block;
+        width: 100%;
+        letter-spacing: 0.3px;
+        box-sizing: border-box;
+        padding-right: 20px;
+
+        &--textarea {
+            resize: none;
+            line-height: 1.4;
+            margin-top: 4px;
+            font-family: inherit;
+            font-size: inherit;
+            overflow: hidden;
+        }
+        input&:-webkit-autofill {
+        	-webkit-box-shadow: 0 0 0px 1000px transparent inset;
+        	transition: background-color 5000s ease-in-out 0s;
+        	background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(0,0,0,0) 100%); //без этого всёравно пролазит желтый цвет, обычный transparent не канает
+        }
+    }
+
+    &__placeholder {
+        position: absolute;
+        letter-spacing: 0.3px;
+        pointer-events: none;
+        top: 0;
+        font-style: italic;
+        font-family: @HKGrotesk-light;
+    }
+
+    &__field:focus ~  &__placeholder {
+        font-style: normal;
+    }
+
+    &__field.is-noempty ~  &__placeholder {
+        display: none;
+    }
+
+    &__dropdown-btn.is-required::after,
+    &__field.is-required ~ &__placeholder::after {
+        content: "*";
+        color: @blue;
+    }
+
+    &__border {
+        height: 1px;
+        background-color: currentColor;
+        width: 100%;
+
+        &::before {
+            content: "";
+            display: none;
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    &__field:focus ~ &__border {
+        background-color: @blue;
+    }
+
+    &__field.is-error ~ &__border::before {
+        background-color: @red;
+        display: block;
+    }
+
+    &__field.is-valid ~ &__border::before {
+        background-color: @green;
+        display: block;
+    }
+
+    &__dropdown-btn {
+        line-height: 27px;
+        height: 27px;
+        position: relative;
+        display: block;
+        width: 100%;
+        text-align: left;
+
+        &::before {
+            content: "";
+            display: block;
+            width: 6px;
+            height: 6px;
+            position: absolute;
+            background-image: url("../img/chevron.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            right: 0;
+            top: 10px;
+        }
+
+        &.is-active::before {
+            transform: rotate(-180deg);
+        }
+    }
+
+    &__field.is-valid ~ &__dropdown-btn::before,
+    &__field.is-error ~ &__dropdown-btn::before {
+        right: 24px;
+    }
+
+    &__dropdown-list {
+        border: 1px solid @blue;
+        background: @gray;
+        box-sizing: border-box;
+        position: absolute;
+        top: calc(~"100% - 1px");
+        width: 100%;
+        z-index: 1;
+        overflow: hidden;
+        display: none;
+    }
+
+    &__dropdown-btn.is-active ~ &__dropdown-list {
+        display: block;
+    }
+
+    &__dropdown-list-item {
+        line-height: 2em;
+        padding: 0 17px;
+        cursor: pointer;
+
+        &:hover {
+            color: @blue;
+        }
+
+        &:first-child {
+            margin-top: 14px;
+        }
+
+        &:last-child {
+            margin-bottom: 14px;
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        top: 4px;
+        right: 0;
+        height: 17px;
+        width: 15px;
+        text-align: center;
+        pointer-events: none;
+        overflow: hidden;
+        display: none;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 17px;
+            height: 17px;
+            top: 0px;
+            left: -1px;
+            background-color: currentColor;
+            transform: rotate(-45deg) skew(18deg, 18deg);
+        }
+        &::after {
+            content: "";
+            color: @white;
+            position: absolute;
+            width: 15px;
+            height: 9px;
+            top: 4px;
+            left: 0;
+            text-align: center;
+            line-height: 1;
+            font-size: 11px;
+        }
+    }
+
+    &__field.is-valid ~ &__icon {
+        display: block;
+        color: @green;
+
+        &::after {
+            background-image: url("../img/mark.png");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+
+    &__field.is-error ~ &__icon {
+        display: block;
+        color: @red;
+
+        &::after {
+            content: "!";
+        }
+    }
+
+    &__tooltip {
+        font-size: 14px;
+        width: 250px;
+        border: 2px solid @gray-light;
+        background-color: @white;
+        color: @gray;
+        padding: 15px 15px 24px;
+        position: absolute;
+        z-index: 1;
+        bottom: 36px;
+        right: -135px;
+        pointer-events: none;
+        display: none;
+
+        &::before {
+            content: "";
+            display: block;
+            height: 9px;
+            width: calc(~"100% + 2px");
+            position: absolute;
+            bottom: -1px;
+            left: -1px;
+            background-color: @white;
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            border-bottom: 1px solid @gray-light;
+            border-right: 1px solid @gray-light;
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+            transform: rotate(45deg);
+            bottom: -7px;
+        }
+    }
+
+    &__field.is-error:hover ~ &__tooltip,
+    &__field.is-error ~ &__dropdown-btn:hover ~ &__tooltip {
+        display: block;
+
+        &::before,
+        &::after {
+            background-color: @red;
+        }
+    }
+
+    &__field.is-valid:hover ~ &__tooltip,
+    &__field.is-valid ~ &__dropdown-btn:hover ~ &__tooltip {
+        display: block;
+
+        &::before,
+        &::after {
+            background-color: @green;
+        }
+    }
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: auto;
+    background-color: @gray;
+
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 0;
+        background-image: linear-gradient(70deg, #ffffff 0%, #ffffff 50%, #ffffff calc(~"50% + 36px"), transparent 50%);
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-image: url("../img/pattern.png");
+        background-position: top;
+        opacity: 0.07;
+    }
+}
+
+.navigation {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    width: 650px;
+    padding-left: 73px;
+    z-index: 1;
+
+    &__item {
+        font-size: 18px;
+        text-transform: uppercase;
+        line-height: 41px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        color: @gray;
+    }
+}
+
+.form {
+    width: 650px;
+    box-sizing: border-box;
+    padding: 44px;
+    flex-shrink: 0;
+    color: @white;
+    z-index: 1;
+
+    margin-top: 184px;
+    height: 600px;
+
+    &__title {
+        font-size: 24px;
+        letter-spacing: 1.6px;
+        text-transform: uppercase;
+        margin-bottom: 13px;
+    }
+
+    &__subtitle {
+        font-size: 14px;
+        line-height: 1.5;
+        padding-left: 1px;
+        letter-spacing: 0.6px;
+        font-family: @HKGrotesk-light;
+        margin-bottom: 15px;
+    }
+
+    &__form {
+        position: relative;
+    }
+
+    &__row {
+        display: flex;
+
+        & + & {
+            margin-top: 17px;
+        }
+
+        &:nth-child(1) {
+            padding-left: 27px;
+        }
+
+        &:nth-child(2) {
+            padding-left: 45px;
+        }
+
+        &:nth-child(3) {
+            padding-left: 60px;
+        }
+
+        &:nth-child(4) {
+            padding-left: 85px;
+        }
+
+        &:nth-child(5) {
+            padding-left: 102px;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        //приходится задавать цвет явно, иначе болеет гугловское автозаполнение
+        textarea:-webkit-autofill,
+        input:-webkit-autofill {
+        	-webkit-text-fill-color: @white;
+        }
+    }
+
+    &__submit {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: @blue;
+        letter-spacing: 1.2px;
+        padding: 1em;
+        margin-top: 8px;
+        text-transform: uppercase;
+        font-family: @HKGrotesk-bold;
+        cursor: pointer;
+    }
+}
